@@ -1,50 +1,34 @@
 ````markdown
 # Pepper Scanner
 
-Minimal TCP port scanner written in Python.  
+A minimal, no-frills TCP port scanner written in Python.  
 Scans a target host for open TCP ports and prints results to the console.
 
-> **Warning:** Only run this tool on systems you own or have explicit permission to test.
+> **Warning:** Run this only against systems you own or have explicit permission to test.
 
 ---
 
-## Repository contents
+## Files
 
-- `pepper.py` — main scanner script
-
----
-
-## Features
-
-- TCP connect scanning (reports open ports)
-- ASCII banner via `pyfiglet`
-- Simple, single-file implementation for learning and quick lab use
+- `pepper.py` — scanner script
 
 ---
 
-## Requirements
+## Quick start
 
-- Python 3.7 or newer
-- `pyfiglet`
-
-Install dependency:
+1. (Optional) Create and activate a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate     # Windows: venv\Scripts\activate
-pip install pyfiglet
+source venv/bin/activate        # Windows: venv\Scripts\activate
 ````
 
-Or use:
+2. Install the single dependency:
 
 ```bash
-pip install -r requirements.txt
+pip install pyfiglet
 ```
 
-(If `requirements.txt` is added to the repo, include `pyfiglet`.)
-
----
-
-## Usage
+3. Run the scanner:
 
 ```bash
 python3 pepper.py <target>
@@ -57,7 +41,9 @@ python3 pepper.py example.com
 python3 pepper.py 192.168.1.10
 ```
 
-Sample output:
+---
+
+## Output example
 
 ```
   ____                      _                    
@@ -66,6 +52,7 @@ Sample output:
  |  __/ (_| | | | | | | |  | | (_) | |_| |  __/  
  |_|   \__,_|_| |_| |_|_|  |_|\___/ \__, |\___|  
                                      |___/       
+
 --------------------------------------------------
 Scanning target: 93.184.216.34
 Scanning started at: 2025-10-14 18:20:00.123456
@@ -77,27 +64,19 @@ Port 443 is open
 
 ---
 
-## Notes / Known behavior
+## Behavior notes
 
-* The script expects a single positional argument (target hostname or IP).
-* Current default port loop uses `range(1, 65535)` (scans ports 1 through 65534). Modify to `range(1, 65536)` to include port 65535.
-* The script uses `socket.setdefaulttimeout(1)`; consider per-socket timeouts if refactoring.
-* The scanner is sequential (one port at a time) and intended for small lab scans or learning purposes.
-
----
-
-## License
-
-Add a `LICENSE` file to the repo with your chosen license (e.g., MIT). If no license is present, the repository defaults to “all rights reserved.”
+* Expects **one** positional argument: the hostname or IPv4 address to scan.
+* Default scanned port range in the script: `1` → `65534`. (Change to `1..65535` if you want to include `65535`.)
+* Uses `socket.connect_ex()` so closed ports do **not** raise exceptions.
+* Uses a sequential scan (one port at a time). Suitable for quick lab checks and learning.
 
 ---
 
-## Contact
+## Troubleshooting
 
-Include your preferred contact (GitHub profile link or email) in the repo if you want others to reach you.
+* `ModuleNotFoundError: No module named 'pyfiglet'` → run `pip install pyfiglet`.
+* If DNS resolution fails, confirm the target and try an IP instead of a hostname.
+* Long run time scanning many ports is expected — the script is sequential.
 
-```
-
-Want me to drop that file into a generated repo structure (LICENSE, requirements.txt, .gitignore) next?
-```
-
+---
