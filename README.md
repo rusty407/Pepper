@@ -1,4 +1,3 @@
-````markdown
 # Pepper Scanner
 
 A minimal, no-frills TCP port scanner written in Python.  
