@@ -16,3 +16,18 @@ print("-" * 50)
 print("Scanning target: " + target)
 print("Scanning started at: " + str(datetime.now()))
 print("-" * 50)
+
+try: 
+
+    for port in range(1, 65535):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+
+        result = s.connect_ex((target,port))
+        if result == 0:
+            print("Port {} is open".format(port))
+except KeyboardInterrupt:
+    print("\n Exiting program!!!!")
+    sys.exit()
+except socket.error:
+    print("Server not responding!!!!")
